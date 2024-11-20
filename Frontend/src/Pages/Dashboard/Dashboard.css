@@ -1,0 +1,88 @@
+/* Container */
+.dashboard-container {
+  display: flex;
+  flex-direction: row;
+  gap: 20px;
+  padding: 20px;
+  background-color: black; /* Dark background for the container */
+  color: #fff; /* White text for contrast */
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  flex-wrap: wrap; /* Make it responsive */
+  min-height: 100vh;
+}
+
+/* Left Div */
+.left-div {
+  background-color: #222; /* Darker background for the left div */
+  padding: 20px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-direction: column;
+  gap: 2rem;
+  min-width: 250px; /* Ensures responsiveness */
+  max-height: 50vh;
+}
+
+.value {
+  font-size: 5rem;
+  font-weight: bold;
+  margin-top: 10px;
+  color: #34a853; /* Green text for the value */
+}
+
+/* Right Div */
+.right-div {
+  flex: 2;
+  background-color: #222; /* Darker background for the right div */
+  padding: 20px;
+  border-radius: 8px;
+  min-width: 300px; /* Ensures responsiveness */
+  max-height: 100vh;
+  overflow-y: scroll;
+}
+
+/* History List */
+.history-list {
+  list-style-type: none;
+  padding: 0;
+  margin-top: 10px;
+  color: #ddd; /* Light gray text */
+  
+}
+
+.history-list li {
+  margin-bottom: 8px;
+}
+
+.history-uls
+{
+  background-color: black;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2px 5px;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.history-uls button{
+  font-size: 16px;
+}
+
+/* Media Queries for Responsiveness */
+@media (max-width: 768px) {
+  .dashboard-container {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .left-div,
+  .right-div {
+    min-width: 100%; /* Full width on smaller screens */
+    margin-bottom: 20px;
+  }
+}

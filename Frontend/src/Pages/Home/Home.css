@@ -1,0 +1,39 @@
+#id
+{
+    position: relative;
+}
+
+.login
+{
+    position: fixed; 
+    top: 50%; 
+    left: 50%;
+    transform: translate(-50%, -50%); 
+    z-index: 2;
+}
+
+
+@media (max-width:550px) {
+
+    .login{
+        width: 90%;
+    }
+}
+
+@media (min-width:768px) {
+    .dnav{
+        display: none;
+    }
+}
+
+.cover
+{
+    position: fixed;
+    z-index: 1;
+    background-color: rgba(245, 245, 245, 0.988);
+    opacity: 0.2;
+    width: 100vw;
+    height: 100vh;
+    overflow-y: hidden;
+}
+

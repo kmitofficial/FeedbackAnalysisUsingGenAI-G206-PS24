@@ -1,0 +1,178 @@
+.section3
+{
+    width: 100%;
+    min-height: 103vh;
+    color: white;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+.url-input-container {
+    min-height: 100vh; 
+    width: 100%;
+    display: flex;
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center;  
+    text-align: center; 
+}
+  
+  .title {
+    font-size: 2.5rem; 
+    margin-bottom: 20px; 
+  }
+  
+  .description {
+    margin: 10px 0; 
+    font-size: 1.2rem; 
+  }
+  
+  /* .url-input {
+    padding: 17px; 
+    margin: 20px 0;
+    background-color: #444;
+    color: #fff; 
+    border-top-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    outline: none;
+    border: none;
+  }
+
+  .url-input:focus{
+    border-style: solid;
+    border-color: white;
+    border-width: 2px;
+  }
+
+  .url-div{
+    width: 55%;
+  } */
+
+/* From Uiverse.io by VijinV */ 
+.inputbox {
+  position: relative;
+  width: 45%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+.inputbox input {
+  position: relative;
+  width: 100%;
+  padding: 20px 10px 10px;
+  background: transparent;
+  outline: none;
+  box-shadow: none;
+  border: none;
+  color: white;
+  letter-spacing: 0.05em;
+  transition: 0.5s;
+
+}
+
+.inputbox span {
+  position: absolute;
+  left: 0;
+  padding: 20px 10px 10px;
+  color: #8f8f8f;
+  letter-spacing: 00.05em;
+  transition: 0.5s;
+  pointer-events: none;
+  bottom: 2px;
+}
+
+.inputbox input:valid ~span,
+.inputbox input:focus ~span {
+  
+  color: #45f3ff;
+  transform: translateX(-10px) translateY(-34px);
+}
+
+.inputbox i {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  border-color: #45f3ff;
+  border-style: solid;
+  border-width: 1px;
+  border-radius: 4px;
+  transition: 0.5s;
+  pointer-events: none;
+  height: 1px;
+}
+
+.inputbox input:valid ~i,
+.inputbox input:focus ~i {
+  height: 44px;
+}
+
+
+  .btn-div
+  {
+    width: 30%;
+    margin-top: 20px;
+    margin-bottom: 30px;
+  }
+
+
+  .btn-div .generate{
+    width: 100%;
+    height: 100%;
+    border-radius: 25px;
+    padding: 10px;
+    color: black;
+    cursor: pointer;
+  }
+
+  .btn-div .generate-two{
+    opacity: 0.3;
+  }
+
+  .btn-div .generate:hover{
+    box-shadow: 0 0 10px rgba(0, 204, 255, 1), 0 0 10px rgba(0, 204, 255, 0.5);
+   transform: scale(1.01);
+}
+  
+  .footer-text {
+    font-size: 1rem; 
+    margin-top: 10px; 
+  }
+  
+  /* Responsive styles */
+  @media (max-width: 768px) {
+    .title {
+      font-size: 2rem; 
+    }
+    .url-div{
+        width: 90%;
+    }
+
+    .btn-div{
+      width: 70%;
+    }
+  
+    .description,
+    .footer-text {
+      font-size: 1rem; 
+    }
+  }
+
+  @media (min-width:768px) and (max-width: 990px) {
+    .title {
+      font-size: 2rem; 
+    }
+    .url-div{
+        width: 85%;
+    }
+    .btn-div{
+      width: 50%;
+    }
+  
+    .description,
+    .footer-text {
+      font-size: 1rem; 
+    }
+  }
+

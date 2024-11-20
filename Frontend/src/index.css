@@ -1,0 +1,27 @@
+*{
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    scroll-behavior: smooth;
+    color: #02c9c9;
+}
+
+button{
+    background-color:#02c9c9;
+    color: black;
+    font-size: 1.5vmax;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+a{
+    text-decoration: none;
+}
+
+.active
+{
+    text-decoration: underline;
+}

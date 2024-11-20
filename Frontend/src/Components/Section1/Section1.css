@@ -1,0 +1,172 @@
+.section1 {
+
+    background-image: url(https://static.vecteezy.com/system/resources/previews/026/535/202/non_2x/3d-circles-minimalist-black-abstract-background-with-blurred-effect-circular-composition-dark-gray-minimalism-style-wallpaper-dark-grey-technology-pattern-blank-backdrop-for-business-vector.jpg);
+    width: 100%;
+    min-height: 103vh;
+    color: white;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 100% 100%;
+}
+
+.landing-page {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-direction: column;
+    padding: 80px 20px 1px 20px;
+    gap: 10px;
+
+}
+
+.first {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 2rem;
+}
+
+.first h1 {
+    font-size: 5vmax;
+    margin-top: 70px;
+}
+
+.first p {
+    width: 70%;
+    text-align: center;
+    font-size: 1.3vmax;
+    margin-bottom: 20px;
+}
+
+.second {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    gap: 1.5rem;
+
+}
+
+.second p {
+    font-size: 1.3vmax;
+
+}
+
+.second a button{
+    width: 200px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1.7rem;
+}
+
+.second a button:hover{
+    box-shadow: 0 0 10px rgba(0, 204, 255, 1), 0 0 20px rgba(0, 204, 255, 0.5);
+   transform: scale(1.05);
+}
+
+
+.second .button button p,span{
+    color: black;
+}
+
+
+.arrow
+{
+    font-size: 50px;
+}
+
+
+
+
+@media (max-width:550px) {
+
+    .landing-page {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-direction: column;
+    }
+
+    .first {
+        width: 100%;
+        text-align: center;
+        padding-top: 10px;
+        margin-top: 10px;
+    }
+
+    .first p {
+
+        width: 97%;
+    }
+
+
+    .second {
+        padding-top: 10px;
+    }
+
+   
+}
+
+
+@media (min-width:550px) and (max-width:768px) {
+
+
+    .first {
+        width: 100%;
+        text-align: center;
+        margin-top: 30px;
+    }
+
+    .first p {
+        width: 70%;
+    }
+
+    .second {
+        gap: 30px;
+        margin-top: 20px;
+    }
+
+    
+}
+
+
+@media (min-width:768px) and (max-width:990px) {
+
+
+    .first {
+        width: 100%;
+        text-align: center;
+        margin-top: 50px;
+    }
+
+    .first p {
+        width: 70%;
+        padding-top: 30px;
+    }
+
+    .second {
+        gap: 20px;
+    }
+
+}
+
+@media (min-width:990px) and (max-width:1200px) {
+
+
+    .first {
+        margin-top: 30px;
+    }
+
+    .first p {
+        width: 80%;
+    }
+
+    .second {
+        padding-bottom: 3%;
+    }
+
+}
