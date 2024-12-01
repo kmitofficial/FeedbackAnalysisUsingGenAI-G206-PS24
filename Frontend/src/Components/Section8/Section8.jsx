@@ -12,7 +12,7 @@ const Section8 = () => {
           <a href="#pricing" className="footer-link">Pricing</a>
           <a href="#contact" className="footer-link">Contact</a>
         </div>
-        <p className="footer-copyright">© 2024 Your Company. All Rights Reserved.</p>
+        <p className="footer-copyright">© 2024 Feedback Analysis. All Rights Reserved.</p>
       </div>
     </footer>
     </div>
