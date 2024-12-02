@@ -56,7 +56,7 @@ const Signup = ({ setShowSignup, setShowLogin }) => {
                                 minLength: { value: 5, message: "Username must be at least 5 characters" }
                             })}
                         />
-                        {errors.username && <p className="error-message">{errors.username.message}</p>}
+                        {errors.username && <p className="error-messagee">{errors.username.message}</p>}
                     </div>
 
                     <div className="input-group">
@@ -73,7 +73,7 @@ const Signup = ({ setShowSignup, setShowLogin }) => {
                                 }
                             })}
                         />
-                        {errors.email && <p className="error-message">{errors.email.message}</p>}
+                        {errors.email && <p className="error-messagee">{errors.email.message}</p>}
                     </div>
 
                     <div className="input-group">
@@ -95,7 +95,7 @@ const Signup = ({ setShowSignup, setShowLogin }) => {
                                 }
                             })}
                         />
-                        {errors.password && <p className="error-message">{errors.password.message}</p>}
+                        {errors.password && <p className="error-messagee">{errors.password.message}</p>}
                     </div>
 
                     <div className="input-group">
@@ -109,7 +109,7 @@ const Signup = ({ setShowSignup, setShowLogin }) => {
                                 validate: value => value === password || "Passwords do not match",
                             })}
                         />
-                        {errors.cpassword && <p className="error-message">{errors.cpassword.message}</p>}
+                        {errors.cpassword && <p className="error-messagee">{errors.cpassword.message}</p>}
                     </div>
 
                     <div className="role">
@@ -141,7 +141,7 @@ const Signup = ({ setShowSignup, setShowLogin }) => {
                                 </span>
                             </label>
                         </div>
-                        {errors.role && <p className="error-message">{errors.role.message}</p>}
+                        {errors.role && <p className="error-messagee">{errors.role.message}</p>}
                     </div>
 
                     <input

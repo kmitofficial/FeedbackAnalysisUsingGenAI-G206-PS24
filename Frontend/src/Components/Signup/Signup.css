@@ -1,6 +1,7 @@
 
   .signup-container {
-    min-width: 400px; 
+    width: 400px; 
+
     margin: 50px auto; 
     padding: 20px; 
     background-color: #222; 
@@ -107,8 +108,9 @@
   /*Validation of sign up*/
 
 
-  .error-message
+  .error-messagee
   {
     color: red;
-    font-size: 1.1vmax;
+    font-size: 13px;
+    
   }

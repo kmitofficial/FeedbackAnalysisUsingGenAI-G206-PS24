@@ -32,6 +32,7 @@ const Login = ({ setShowLogin, setShowSignup }) => {
         console.log(response.data)
         dispatch(setToken(response.data.token))
         localStorage.setItem('token', JSON.stringify(response.data.token));
+        
         setShowLogin(false);
 
       }

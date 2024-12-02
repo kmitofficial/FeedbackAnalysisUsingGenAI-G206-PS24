@@ -1,14 +1,19 @@
 import React, { useState, useEffect } from 'react';
 import './Section4.css';
 import Loader from '../Loader/Loader'
+import {useSelector,useDispatch} from 'react-redux'
+import { setLoading } from '../../Slices/authSlice';
 
-const Section4 = ({ reviews,loading,setLoading }) => {
+const Section4 = ({ reviews }) => {
+
+  const dispatch=useDispatch();
+  const {loading}=useSelector((state)=>state.auth)
 
   console.log(reviews)
 
   useEffect(() => {
     if (reviews && reviews.get_reviews) {
-      setLoading(false);  // Once reviews are available, set loading to false
+      dispatch(setLoading(false))  // Once reviews are available, set loading to false
     }
   }, [reviews]);
 
