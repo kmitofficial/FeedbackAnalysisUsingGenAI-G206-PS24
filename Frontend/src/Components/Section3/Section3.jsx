@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import './Section3.css';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
+import {useDispatch} from 'react-redux'
+import { setLoading } from '../../Slices/authSlice';
 
-const Section3 = ({ setShowSection4, setReviews ,setLoading}) => {
+const Section3 = ({ setShowSection4, setReviews}) => {
+  const dispatch=useDispatch();
   const [url, setUrl] = useState('');
   const [triggerApi, setTriggerApi] = useState(false);
 
@@ -95,7 +98,7 @@ const Section3 = ({ setShowSection4, setReviews ,setLoading}) => {
       return;
     }
     else{
-      setLoading(true)
+      dispatch(setLoading(true))
     setShowSection4(true); // Show section 4
     setTriggerApi(true); // Trigger the API call
     }
