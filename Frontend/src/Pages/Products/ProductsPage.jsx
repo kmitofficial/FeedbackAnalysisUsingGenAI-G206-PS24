@@ -1,0 +1,82 @@
+import React, { useEffect, useState } from "react";
+import "./ProductsPage.css";
+import axios from 'axios'
+import {toast} from 'react-hot-toast'
+
+const productsData = [
+  { url: "http://example.com/product1", summary: "Product 1 Summary", averageRating: 4.5 },
+  { url: "http://example.com/product2", summary: "Product 2 Summary", averageRating: 4.0 },
+  { url: "http://example.com/product3", summary: "Product 3 Summary", averageRating: 3.8 },
+  { url: "http://example.com/product4", summary: "Product 4 Summary", averageRating: 4.7 },
+  { url: "http://example.com/product5", summary: "Product 5 Summary", averageRating: 3.5 },
+];
+
+const ProductsPage = () => {
+  
+  const [searchTerm, setSearchTerm] = useState("");
+  const [products, setProducts] = useState([]);
+  const [loading, setLoading] = useState(true); // State to handle loading
+  const storedToken = JSON.parse(localStorage.getItem('token')); // Use token from Redux or localStorage
+
+
+  console.log("Products",products)
+
+  const filteredProducts = products.filter((product) =>
+    product.summary.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
+  const fecthProducts = async () => {
+    setLoading(true)
+    try {
+      const response = await axios.get('http://localhost:7000/api/products/products', {
+        headers: {
+          Authorization: `Bearer ${storedToken}`, // Pass token in Authorization header
+        },
+      })
+      if(response.data.success)
+      {
+        setProducts(response.data.data);
+        setLoading(false)
+      }
+      else{
+        toast.error("could not fetch products!")
+      }
+     
+    } catch (error) {
+         console.log("Could not fetch products:",error.message)
+    }
+  }
+
+  useEffect(() => {
+      fecthProducts();
+  },[])
+
+  if(loading)
+  {
+    return <p>Laoding...</p>
+  }
+
+  return (
+    <div className="products">
+      <div className="search-bar">
+        <input
+          type="text"
+          placeholder="Search products..."
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
+      <div className="product-container">
+        {filteredProducts.map((product, index) => (
+          <div key={index} className="product-card">
+            <p><strong>URL:</strong> <a href={product.url}>{product.url}</a></p>
+            <p><strong>Summary:</strong> {product.summary}</p>
+            <p><strong>Average Rating:</strong> {product.avgRating}</p>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+};
+
+export default ProductsPage;
