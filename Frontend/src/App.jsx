@@ -7,13 +7,15 @@ import './App.css'
 import { createBrowserRouter,RouterProvider } from 'react-router-dom'
 import Error from './Pages/Error/Error'
 import History from './Pages/History/History'
+import ProductsPage from './Pages/Products/ProductsPage'
 
 const router=createBrowserRouter([
   {path:'/',element:<AppLayout/>,children:[
     {path:'/',element:<Home/>},
     {path:'/dashboard',element:<Dashboard/>},
     {path:'/profile',element:<Profile/>},
-    {path:'/dashboard/history/:id',element:<History/>}
+    {path:'/dashboard/history/:id',element:<History/>},
+    {path:'/products',element:<ProductsPage/>}
   ],errorElement:<Error/>}
 ])
 

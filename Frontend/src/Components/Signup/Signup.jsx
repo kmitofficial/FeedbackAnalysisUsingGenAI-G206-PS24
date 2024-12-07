@@ -112,38 +112,6 @@ const Signup = ({ setShowSignup, setShowLogin }) => {
                         {errors.cpassword && <p className="error-messagee">{errors.cpassword.message}</p>}
                     </div>
 
-                    <div className="role">
-                        <p className='role-p'>What is your role?</p>
-                        <div className="radio-group">
-                            <label className="role-label" htmlFor="seller">
-                                <p className='role-p'>Product Seller: </p>
-                                <span>
-                                    <input
-                                        value="Seller"
-                                        type="radio"
-                                        id="seller"
-                                        {...register("role", { required: "Please select your role" })}
-                                        className="radio-input"
-                                    />
-                                </span>
-                            </label>
-
-                            <label className="role-label" htmlFor="buyer">
-                                <p className='role-p'>Product Buyer: </p>
-                                <span>
-                                    <input
-                                        value="Buyer"
-                                        type="radio"
-                                        id="buyer"
-                                        {...register("role", { required: "Please select your role" })}
-                                        className="radio-input"
-                                    />
-                                </span>
-                            </label>
-                        </div>
-                        {errors.role && <p className="error-messagee">{errors.role.message}</p>}
-                    </div>
-
                     <input
                         style={{ opacity: isSubmitting ? 0.5 : 1 }}
                         type="submit"

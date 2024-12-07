@@ -72,7 +72,6 @@ const Login = ({ setShowLogin, setShowSignup }) => {
           />
         </div>
         <button type="submit" className="login-button">Login</button>
-        <a href="#forgot-password" className="forgot-password">Forgot Password?</a>
       </form>
       <p className="signup-link" onClick={() => setShowSignup(true)}>
         Don't have an account? <span>Sign Up</span>

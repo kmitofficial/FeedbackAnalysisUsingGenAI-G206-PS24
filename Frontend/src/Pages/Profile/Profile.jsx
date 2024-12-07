@@ -87,9 +87,6 @@ const Profile = () => {
             <strong>Email:</strong> {userDetails.email}
           </p>
           <p>
-            <strong>Role:</strong> {userDetails.role}
-          </p>
-          <p>
             <strong>Date Joined:</strong> {userDetails.createdAt.split('T')[0].split('-').reverse().join('-')}
           </p>
         </div>

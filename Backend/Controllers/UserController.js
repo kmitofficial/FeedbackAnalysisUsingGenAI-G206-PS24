@@ -85,7 +85,7 @@ const sendOtp = async (req, res) => {
 const signUp = async (req, res) => {
     try {
         // Fetch data from req.body
-        const { username, email, password, cpassword, role, otp } = req.body;
+        const { username, email, password, cpassword, otp } = req.body;
        
         console.log(username, email, password, cpassword, otp);
         
@@ -133,7 +133,6 @@ const signUp = async (req, res) => {
             username,
             email,
             password: hashedPassword,
-            role,
             image: `https://api.dicebear.com/5.x/initials/svg?seed=${username}`
         });
 
@@ -194,7 +193,6 @@ const login = async (req, res) => {
         const payLoad={
             email:isExist.email,
             id:isExist._id,
-            role:isExist.role
         }
 
         const token=jwt.sign(payLoad,process.env.JWT_SECRET)
