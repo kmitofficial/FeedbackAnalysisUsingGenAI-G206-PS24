@@ -2,22 +2,15 @@ import React, { useEffect, useState } from "react";
 import "./ProductsPage.css";
 import axios from 'axios'
 import {toast} from 'react-hot-toast'
-
-const productsData = [
-  { url: "http://example.com/product1", summary: "Product 1 Summary", averageRating: 4.5 },
-  { url: "http://example.com/product2", summary: "Product 2 Summary", averageRating: 4.0 },
-  { url: "http://example.com/product3", summary: "Product 3 Summary", averageRating: 3.8 },
-  { url: "http://example.com/product4", summary: "Product 4 Summary", averageRating: 4.7 },
-  { url: "http://example.com/product5", summary: "Product 5 Summary", averageRating: 3.5 },
-];
+import {useNavigate} from 'react-router-dom'
 
 const ProductsPage = () => {
+  const navigate=useNavigate();
   
   const [searchTerm, setSearchTerm] = useState("");
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(true); // State to handle loading
   const storedToken = JSON.parse(localStorage.getItem('token')); // Use token from Redux or localStorage
-
 
   console.log("Products",products)
 
@@ -48,8 +41,13 @@ const ProductsPage = () => {
   }
 
   useEffect(() => {
+    if(!storedToken)
+      {
+         return navigate('/')
+      }
+    
       fecthProducts();
-  },[])
+  },[storedToken,navigate])
 
   if(loading)
   {

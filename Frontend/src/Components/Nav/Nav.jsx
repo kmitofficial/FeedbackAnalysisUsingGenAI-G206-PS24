@@ -21,7 +21,7 @@ const Nav = ({ setShowLogin, setShowDnav }) => {
   return (
     <div className='navbar'>
       <span onClick={() => setShowDnav(true)}><TiThMenu /></span>
-      <a href="#main">      <div className="logo"><img height={50} width={50} src="https://i.pinimg.com/736x/ad/03/6c/ad036cc20e58cacf1783793ee69a8a60.jpg" alt="" /></div>
+      <a href="#main">      <div className="logo"><img height={80} width={80} src="https://thumbs.dreamstime.com/b/fa-letter-logo-design-simple-modern-monogram-abstract-alphabet-vector-323515344.jpg" alt="" /></div>
       </a>
       <ul>
         <li><a href="#features">Features</a></li>
