@@ -182,7 +182,7 @@ const Section4 = ({ reviews }) => {
                     ))}
                   </Pie>
                   <Tooltip
-
+                    
                     itemStyle={{
                       color: 'white', // White text color
                     }}
@@ -196,35 +196,24 @@ const Section4 = ({ reviews }) => {
             </div>
 
             <div className="section4-pros-cons">
-              <div className="pros-cons-container">
-                <div className="pros">
-                  <h3 style={{marginBottom:'10px'}}>Pros</h3>
-                  {positive_keywords?.length ? (
-                    positive_keywords.map((keyword, index) => (
-                      <span key={index} className="keyword-item green-text">
-                        {keyword}
-                      </span>
-                    ))
-                  ) : (
-                    <p>No pros available</p>
-                  )}
-                </div>
-                <div className="cons">
-                  <h3 style={{marginBottom:'10px'}}>Cons</h3>
-                  {negative_keywords?.length ? (
-                    negative_keywords.map((keyword, index) => (
-                      <span key={index} className="keyword-item red-text">
-                        {keyword}
-                      </span>
-                    ))
-                  ) : (
-                    <p>No cons available</p>
-                  )}
-                </div>
+              <div className="pros">
+                <h3 style={{margin:'10px'}}>Pros</h3>
+                {positive_keywords?.map((keyword, index) => (
+                  <span key={index} className="keyword-item green-text">
+                    {keyword}
+                  </span>
+                )) || 'No pros available'} 
+              </div>
+
+              <div className="cons">
+                <h3 style={{margin:'10px'}}>Cons</h3>
+                {negative_keywords?.map((keyword, index) => (
+                  <span  key={index} className="keyword-item red-text">
+                    {keyword}
+                  </span>
+                )) || 'No cons available'}
               </div>
             </div>
-
-
           </div>
 
           <div className="section4-rating">
