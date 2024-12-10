@@ -32,7 +32,6 @@ const Profile = () => {
         console.error('Error fetching user details:', error);
         toast.error('Failed to fetch user details.');
         setLoading(false); // Turn off loading in case of error
-        navigate('/'); // Redirect to login page on failure
       }
     };
 

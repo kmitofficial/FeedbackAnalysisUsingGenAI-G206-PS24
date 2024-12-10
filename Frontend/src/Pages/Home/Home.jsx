@@ -13,13 +13,11 @@ import Section7 from '../../Components/Section7/Section7'
 import Section8 from '../../Components/Section8/Section8'
 import Login from '../../Components/Login/Login'
 import Signup from '../../Components/Signup/Signup'
-import { useOutletContext } from 'react-router-dom';
 import Dropnav from '../../Components/Dropnav/Dropnav'
 
 
 const Home = () => {
-    const context = useOutletContext()
-    console.log(context)
+    
     const [loading, setLoading] = useState(true);
 
     const [showReview,setShowReview]=useState(false)
@@ -34,20 +32,26 @@ console.log("home:",reviews)
 
     return (
         <>
-            <div className={`${showLogin ? "cover" : ""}`}></div>
+            <div className={`${showLogin ? "cover" : ""}`}></div>  {/*this div is used for diabling pointer 
+            events on website when login or signup components are shown */}
 
             <div id='home'>
                 <div className="dnav">
-                <Dropnav showDnav={showDnav} setShowDnav={setShowDnav}></Dropnav>
+                <Dropnav showDnav={showDnav} setShowDnav={setShowDnav}></Dropnav> {/*showDnav to show Dropnav in small devices setShoDnav for deciding wether to show Dropnav or Not */}
                 </div>
                 <Nav setShowLogin={setShowLogin} setShowDnav={setShowDnav}></Nav>
+                {/** here same setShowLogin to show Login comp */}
 
                 <Section1 ></Section1>
                 <Section0></Section0>
 
                 <Section2></Section2>
                 <Section3 setShowSection4={setShowSection4} setReviews={setReviews} setLoading={setLoading}></Section3>
+                 {/**setShowSection4 is to show Section4 visible ans setReviews to store summarry result of particular product */}
+
                 {showSection4 && <Section4 showReview={showReview} reviews={reviews} loading={loading} setLoading={setLoading}></Section4>}
+                  {/*Section4 is visible only when ShowSection4 is true and ShowSection will be true when reviews result is got. */}
+
                 <Section6></Section6>
                 <Section7></Section7>
                 <Section5></Section5>
