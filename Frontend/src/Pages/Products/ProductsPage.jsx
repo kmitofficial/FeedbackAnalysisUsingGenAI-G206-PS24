@@ -67,7 +67,7 @@ const ProductsPage = () => {
       <div className="product-container">
         {filteredProducts.map((product, index) => (
           <div key={index} className="product-card">
-            <p><strong>URL:</strong> <a href={product.url}>{product.url}</a></p>
+            <p><strong>URL:</strong> <a href={product.url}>{product.url.substring(0,150)}...</a></p>
             <p><strong>Summary:</strong> {product.summary}</p>
             <p><strong>Average Rating:</strong> {product.avgRating}</p>
           </div>
