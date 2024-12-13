@@ -118,6 +118,7 @@ import './Section4.css';
 import Loader from '../Loader/Loader';
 import { useSelector, useDispatch } from 'react-redux';
 import { setLoading } from '../../Slices/authSlice';
+import MCQQuiz from '../McqQuiz/McqQuiz';
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 const Section4 = ({ reviews }) => {
@@ -153,7 +154,11 @@ const Section4 = ({ reviews }) => {
   return (
     <div id="review" className="section4-container">
       {loading ? (
-        <Loader />
+        <div style={{display:'flex', flexDirection: "row", alignItems: "stretch"}}>
+          <Loader />
+          <MCQQuiz/>
+        </div>
+        
       ) : (
         <div className="section4-content">
           <div className="section4-summary">
