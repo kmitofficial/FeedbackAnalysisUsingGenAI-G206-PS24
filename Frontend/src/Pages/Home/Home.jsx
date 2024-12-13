@@ -49,7 +49,7 @@ console.log("home:",reviews)
                 <Section3 setShowSection4={setShowSection4} setReviews={setReviews} setLoading={setLoading}></Section3>
                  {/**setShowSection4 is to show Section4 visible ans setReviews to store summarry result of particular product */}
 
-                {showSection4 && <Section4 showReview={showReview} reviews={reviews} loading={loading} setLoading={setLoading}></Section4>}
+                {!showSection4 && <Section4 showReview={showReview} reviews={reviews} loading={loading} setLoading={setLoading}></Section4>}
                   {/*Section4 is visible only when ShowSection4 is true and ShowSection will be true when reviews result is got. */}
 
                 <Section6></Section6>

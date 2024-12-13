@@ -153,7 +153,7 @@ const Section4 = ({ reviews }) => {
 
   return (
     <div id="review" className="section4-container">
-      {loading ? (
+      {!loading ? (
         <div style={{display:'flex', flexDirection: "row", alignItems: "stretch"}}>
           <Loader />
           <MCQQuiz/>
