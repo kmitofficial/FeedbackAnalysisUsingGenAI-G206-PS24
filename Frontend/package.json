@@ -18,10 +18,15 @@
     "@shadcn/ui": "^0.0.4",
     "axios": "^1.7.7",
     "bootstrap": "^5.3.3",
+<<<<<<< HEAD
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "lucide-react": "^0.468.0",
+=======
+    "chart.js": "^4.4.7",
+>>>>>>> e15971863e2c890ab793432de32cf865125b5c38
     "react": "^18.3.1",
+    "react-chartjs-2": "^5.2.0",
     "react-dom": "^18.3.1",
     "react-hook-form": "^7.53.0",
     "react-hot-toast": "^2.4.1",
