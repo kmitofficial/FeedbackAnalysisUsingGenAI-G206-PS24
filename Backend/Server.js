@@ -8,6 +8,7 @@ const cors = require('cors');
 const UserRouter=require('./Routes/UserRoutes')
 const ReviewRouter=require('./Routes/ReviewRoutes')
 const ProductRouter=require('./Routes/ProductsRoutes')
+const QuizRouter=require('./Routes/QuizRoutes')
 
 const PORT=process.env.PORT
 
@@ -20,6 +21,7 @@ app.use(cors());
 app.use("/api/users",UserRouter)
 app.use('/api/reviews',ReviewRouter)
 app.use("/api/products",ProductRouter)
+app.use("/api/quiz",QuizRouter)
 
 
 //db function
