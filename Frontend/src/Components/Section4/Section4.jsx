@@ -113,7 +113,7 @@
 // export default Section4;
 
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import './Section4.css';
 import Loader from '../Loader/Loader';
 import { useSelector, useDispatch } from 'react-redux';
@@ -122,6 +122,7 @@ import MCQQuiz from '../McqQuiz/McqQuiz';
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer, Legend } from 'recharts';
 
 const Section4 = ({ reviews }) => {
+  const [showQuiz, setShowQuiz] = useState(false)
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.auth);
 
@@ -153,12 +154,25 @@ const Section4 = ({ reviews }) => {
 
   return (
     <div id="review" className="section4-container">
-      {!loading ? (
-        <div style={{display:'flex', flexDirection: "row", alignItems: "stretch"}}>
-          <Loader />
-          <MCQQuiz/>
+
+      <div className="qz">
+          {
+            showQuiz && <div >
+              <MCQQuiz setShowQuiz={setShowQuiz} />
+            </div>
+          }
+          <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: '10px' }}>
+            {
+              showQuiz ? <button style={{ width: 'max-content', fontSize: '17px', marginTop: '5px' }} onClick={() => setShowQuiz(false)}>End Quiz</button>
+                : <button style={{ width: 'max-content', fontSize: '17px' }} onClick={() => setShowQuiz(true)}>Start Quiz</button>
+            }
+          </div>
         </div>
-        
+      {loading ? (
+        <div style={{ display: 'flex', flexDirection: "column", alignItems: "center", gap: '30px' }}>
+          <Loader />
+        </div>
+
       ) : (
         <div className="section4-content">
           <div className="section4-summary">
@@ -187,7 +201,7 @@ const Section4 = ({ reviews }) => {
                     ))}
                   </Pie>
                   <Tooltip
-                    
+
                     itemStyle={{
                       color: 'white', // White text color
                     }}
@@ -202,18 +216,18 @@ const Section4 = ({ reviews }) => {
 
             <div className="section4-pros-cons">
               <div className="pros">
-                <h3 style={{margin:'10px'}}>Pros</h3>
+                <h3 style={{ margin: '10px' }}>Pros</h3>
                 {positive_keywords?.map((keyword, index) => (
                   <span key={index} className="keyword-item green-text">
                     {keyword}
                   </span>
-                )) || 'No pros available'} 
+                )) || 'No pros available'}
               </div>
 
               <div className="cons">
-                <h3 style={{margin:'10px'}}>Cons</h3>
+                <h3 style={{ margin: '10px' }}>Cons</h3>
                 {negative_keywords?.map((keyword, index) => (
-                  <span  key={index} className="keyword-item red-text">
+                  <span key={index} className="keyword-item red-text">
                     {keyword}
                   </span>
                 )) || 'No cons available'}

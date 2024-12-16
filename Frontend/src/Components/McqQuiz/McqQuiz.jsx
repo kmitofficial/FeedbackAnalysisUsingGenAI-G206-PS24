@@ -11,6 +11,7 @@ const MCQQuiz = () => {
   const [answerSubmitted, setAnswerSubmitted] = useState(false);
   const [answerFeedback, setAnswerFeedback] = useState("");
   const [questions, setQues] = useState([]);
+  const [tryAgain,setTryAgain]=useState(false)
 
   const fetchQuiz = async () => {
     try {
@@ -35,7 +36,7 @@ const MCQQuiz = () => {
 
   useEffect(() => {
     fetchQuiz();
-  }, []);
+  }, [tryAgain]);
 
   const handleAnswerSelection = (answer) => {
     if (!answerSubmitted) {
@@ -116,12 +117,20 @@ const MCQQuiz = () => {
           </div>
         </div>
       ) : (
-        <div className="result">
+        <div style={{display:'flex',flexDirection:'column',gap:'20px',alignItems:'center'}}>
           <h3>Thank You for Completing the Quiz!</h3>
           <p>
             Your Score: {score} / {questions.length}
           </p>
-          <button onClick={() => window.location.reload()}>Try Again</button>
+          <button style={{fontSize:'17px'}} onClick={()=>{
+            setTryAgain((prev) => !prev); // Toggle tryAgain to trigger fetchQuiz
+            setQuizComplete(false); // Reset quiz completion status
+            setCurrentQuestionIndex(0); // Reset question index
+            setScore(0); // Reset score
+            setSelectedAnswer(null); // Clear selected answer
+            setAnswerSubmitted(false); // Reset answer submission state
+            setAnswerFeedback(""); // Clear feedback
+          }}>Try Again</button>
         </div>
       )}
 

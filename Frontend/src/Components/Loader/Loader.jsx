@@ -8,6 +8,7 @@ const Loader = () => {
       <h1 style={{color:'whitesmoke'}}>Analyzing<span class="dots"><span>.</span><span>.</span><span>.</span></span></h1>
 
         <p >Please wait it may take few minutes</p>
+        <p>mean whle you can have Quiz</p>
       </div>
     </div>
   )
