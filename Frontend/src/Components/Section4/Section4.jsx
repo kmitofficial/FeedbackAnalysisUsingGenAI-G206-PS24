@@ -120,9 +120,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setLoading } from '../../Slices/authSlice';
 import MCQQuiz from '../McqQuiz/McqQuiz';
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer, Legend } from 'recharts';
+import { RxCross2 } from "react-icons/rx";
 
 const Section4 = ({ reviews }) => {
   const [showQuiz, setShowQuiz] = useState(false)
+  const [showStartQuiz, setShowStartQuiz] = useState(true)
   const dispatch = useDispatch();
   const { loading } = useSelector((state) => state.auth);
 
@@ -155,7 +157,8 @@ const Section4 = ({ reviews }) => {
   return (
     <div id="review" className="section4-container">
 
-      <div className="qz">
+      {
+        showStartQuiz && <div className="qz">
           {
             showQuiz && <div >
               <MCQQuiz setShowQuiz={setShowQuiz} />
@@ -163,11 +166,16 @@ const Section4 = ({ reviews }) => {
           }
           <div style={{ display: 'flex', alignItems: 'center', flexDirection: 'column', gap: '10px' }}>
             {
+              !showQuiz && <span onClick={() => setShowStartQuiz((prev) => !prev)} style={{ position: 'relative', bottom: '20px', left: '60px', fontSize: '20px', cursor: 'pointer' }}><RxCross2 /></span>
+
+            }
+            {
               showQuiz ? <button style={{ width: 'max-content', fontSize: '17px', marginTop: '5px' }} onClick={() => setShowQuiz(false)}>End Quiz</button>
                 : <button style={{ width: 'max-content', fontSize: '17px' }} onClick={() => setShowQuiz(true)}>Start Quiz</button>
             }
           </div>
         </div>
+      }
       {loading ? (
         <div style={{ display: 'flex', flexDirection: "column", alignItems: "center", gap: '30px' }}>
           <Loader />
