@@ -120,6 +120,8 @@ import { useSelector, useDispatch } from 'react-redux';
 import { setLoading } from '../../Slices/authSlice';
 import MCQQuiz from '../McqQuiz/McqQuiz';
 import { PieChart, Pie, Tooltip, Cell, ResponsiveContainer, Legend } from 'recharts';
+import AnimatedSummary from './AnimatedSummary';
+import Breadcrumb from './Breadcrumb';
 
 const Section4 = ({ reviews }) => {
   const dispatch = useDispatch();
@@ -161,10 +163,12 @@ const Section4 = ({ reviews }) => {
         
       ) : (
         <div className="section4-content">
-          <div className="section4-summary">
+          {/* <div className="section4-summary">
             <h3>Summary</h3>
             <p>{summary || 'No summary available'}</p>
-          </div>
+          </div> */}
+            <Breadcrumb categories={reviews.get_reviews.categories || ["Product name not available"]} />
+            <AnimatedSummary summary={summary || 'No summary available'}></AnimatedSummary>
 
           <div className="section4-details">
             <div className="section4-sentiments">

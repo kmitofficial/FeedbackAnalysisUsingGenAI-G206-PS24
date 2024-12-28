@@ -1,30 +1,14 @@
 {
-    "manifest_version": 3,
-    "name": "Flipkart URL Sender",
-    "version": "1.0",
-    "permissions": [
-      "activeTab",
-      "scripting",
-      "storage",
-      "identity",
-      "tabs"
-    ],
-    "host_permissions": [
-      "https://*.flipkart.com/*",
-      "http://127.0.0.1:5173/*"
-    ],
-    "background": {
-      "service_worker": "background.js"
-    },
-    "content_scripts": [
-      {
-        "matches": ["https://*.flipkart.com/*"],
-        "js": ["content.js"]
-      }
-    ],
-    "action": {
-      "default_title": "Flipkart URL Sender",
-      "default_popup": "popup.html"
-    }
+  "manifest_version": 3,
+  "name": "Flipkart Review Analyzer",
+  "version": "1.0",
+  "description": "Analyzes reviews from Flipkart product pages",
+  "permissions": ["activeTab"],
+  "action": {
+    "default_popup": "popup.html"
+  },
+  "icons": {
+    "48": "icon.png",
+    "128": "icon.png"
   }
-  
+}

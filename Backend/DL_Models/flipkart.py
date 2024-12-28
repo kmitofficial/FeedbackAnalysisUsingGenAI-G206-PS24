@@ -18,11 +18,19 @@ from rake_nltk import Rake
 from transformers import pipeline
 from textblob import TextBlob
 import time
+from nltk.probability import FreqDist
+from nltk.corpus import stopwords
+from keybert import KeyBERT
+from selenium.webdriver.support.ui import Select
+from flask_cors import CORS
+from keyPhraseExtraction import extract_sentiment_phrases
+
 # Download necessary NLTK resources (if not already downloaded)
 nltk.download('stopwords')
 nltk.download('punkt')
 
 app = Flask(__name__)
+CORS(app) 
 
 # summarizer = pipeline("summarization", model="facebook/bart-large-cnn")
 
@@ -76,7 +84,7 @@ def getSentiment(data):
     model.eval()
 
     def predict_review(review):
-        print(review)
+        # print(review)
         review_tfidf = tfidf_vectorizer.transform([review]).toarray()
 
         inputs = torch.tensor(review_tfidf, dtype=torch.float32)
@@ -87,7 +95,7 @@ def getSentiment(data):
             probabilities = torch.softmax(outputs, dim=1).squeeze().numpy()
 
         predicted_label = predicted.item()
-        print(predicted_label)
+        # print(predicted_label)
         return predicted_label, probabilities
 
     # review = "This product is waste of money."
@@ -107,7 +115,7 @@ def getSentiment(data):
 
 
 def extract_unique_keywords(reviews):
-    print(reviews)
+    # print(reviews)
     rake = Rake()
     unique_keywords = set()
     # for review in reviews:
@@ -144,6 +152,117 @@ def split_reviews(reviews, max_tokens=500):
         chunks.append(" ".join(words[:max_tokens]))
         words = words[max_tokens:]
     return chunks
+
+
+
+
+
+
+def extract_keywords(sentences):
+    
+    # Initialize KeyBERT model
+    kw_model = KeyBERT()
+    
+    
+    # sentiment_analyzer = pipeline("sentiment-analysis")
+
+    sentiment_analyzer = pipeline(
+        "sentiment-analysis",
+        model="distilbert-base-uncased-finetuned-sst-2-english"
+    )
+    
+    stop_words = set(stopwords.words("english"))
+    positive_phrases = []
+    negative_phrases = []
+    
+    for sentence in sentences:
+        
+        extracted_phrases = kw_model.extract_keywords(sentence, keyphrase_ngram_range=(1, 2), stop_words="english", top_n=5)
+        
+        
+        for phrase, _ in extracted_phrases:
+            clean_phrase = ' '.join(word for word in phrase.split() if word.lower() not in stop_words)
+            if clean_phrase:  # Ensure it's not empty after cleaning
+                sentiment = sentiment_analyzer(clean_phrase)[0]['label']
+                if sentiment == "POSITIVE":
+                    positive_phrases.append(clean_phrase)
+                elif sentiment == "NEGATIVE":
+                    negative_phrases.append(clean_phrase)
+    
+    pos_freq = FreqDist(positive_phrases)
+    neg_freq = FreqDist(negative_phrases)
+    
+    return {
+    "positive_keywords": [phrase for phrase, _ in pos_freq.most_common(5)],  
+    "negative_keywords": [phrase for phrase, _ in neg_freq.most_common(5)]   
+    }
+
+
+
+
+def extract_keywords_using_roberta(sentences):
+    # Initialize KeyBERT model
+    kw_model = KeyBERT()
+    
+    # Initialize sentiment analyzer with Wiki-Roberta model
+    sentiment_analyzer = pipeline(
+        "sentiment-analysis",
+        model="cardiffnlp/twitter-roberta-base-sentiment"
+    )
+    
+    stop_words = set(stopwords.words("english"))
+    positive_phrases = []
+    negative_phrases = []
+    
+    def is_subset(new_phrase, existing_phrases):
+        """Check if the new_phrase is a subset of any existing phrase."""
+        for phrase in existing_phrases:
+            if new_phrase in phrase or phrase in new_phrase:
+                return True
+        return False
+    
+    for sentence in sentences:
+        # Extract keywords using KeyBERT
+        extracted_phrases = kw_model.extract_keywords(
+            sentence, 
+            keyphrase_ngram_range=(1, 3), 
+            stop_words="english", 
+            top_n=5
+        )
+        
+        for phrase, _ in extracted_phrases:
+            # Remove stopwords from the phrase
+            clean_phrase = ' '.join(word for word in phrase.split() if word.lower() not in stop_words)
+            if clean_phrase:  # Ensure it's not empty after cleaning
+                sentiment = sentiment_analyzer(clean_phrase)[0]['label']
+                
+                # Add to positive or negative list only if it's not a subset of existing keywords
+                if sentiment == "Positive" and not is_subset(clean_phrase, positive_phrases):
+                    positive_phrases.append(clean_phrase)
+                elif sentiment == "Negative" and not is_subset(clean_phrase, negative_phrases):
+                    negative_phrases.append(clean_phrase)
+    
+    return {
+        "positive_keywords": positive_phrases[:10],  # Get top 10 unique phrases
+        "negative_keywords": negative_phrases[:10]   # Get top 10 unique phrases
+    }
+
+
+# sentences = [
+#     "The new product is outstanding and delivers great value.",
+#     "Customer support is awful and they never respond on time.",
+#     "I love the sleek design of the phone.",
+#     "The battery life is disappointing and doesn't last long."
+# ]
+
+# results = extract_keywords(sentences)
+# print("Positive Phrases:", results['positive'])
+# print("Negative Phrases:", results['negative'])
+
+
+
+
+
 
 
 
@@ -197,56 +316,96 @@ def get_ratings(browser, reviews):
 
 # Main function to extract reviews and ratings
 def get_reviews_ratings(browser, url, max_reviews=20):
-    reviews = {"review_text": [], "rating": []}
+    reviews = {"review_text": [], "rating": [], "categories": []}
     open_url(browser, url)
 
-    # Step 1: Click on "All Reviews" button
     try:
+        try:
+            category_elements = browser.find_elements(By.CLASS_NAME, "R0cyWM")
+            eles = []
+            for element in category_elements:
+                print(f"Category element: {element.text}")
+                eles.append(element.text)
+            reviews["categories"] = eles
+        except Exception as e:
+            print(f"Error extracting categories: {e}")
+            reviews["categories"] = ["No categories found"]
+
+
+
+        # Wait for the "All Reviews" button to be clickable and click it
         all_reviews = WebDriverWait(browser, 10).until(
             EC.element_to_be_clickable((By.XPATH, '//div[@class="_23J90q RcXBOT"]/span[contains(text(),"All")]'))
         )
         all_reviews.click()
         time.sleep(3)  # Allow time for the reviews page to load
-    except Exception as e:
-        print(f"Error clicking 'All Reviews' button: {e}")
-        return reviews
 
-    # Step 2: Loop through each page and extract reviews
-    while len(reviews["review_text"]) < max_reviews:
-        try:
-            # Extract reviews and ratings from the current page
-            get_reviewtext(browser, reviews)
-            get_ratings(browser, reviews)
+        # Select the "POSITIVE_FIRST" option from the dropdown
+        select_element = WebDriverWait(browser, 10).until(
+            EC.element_to_be_clickable((By.CLASS_NAME, "OZuttk.JEZ5ey"))
+        )
+        select = Select(select_element)
 
-            # Stop if the required number of reviews is reached
-            if len(reviews["review_text"]) >= max_reviews:
-                break
+        # Extract positive reviews first
+        select.select_by_value("POSITIVE_FIRST")
+        time.sleep(2)  # Allow time for the dropdown to apply the filter
 
-            # Ensure reviews and ratings lists are the same length
-            # while len(reviews["review_text"]) > len(reviews["rating"]):
-            #     reviews["rating"].append(None)
-            # while len(reviews["rating"]) > len(reviews["review_text"]):
-            #     reviews["review_text"].append(None)
-
-            # Click the "Next" button to go to the next page
+        while len(reviews["review_text"]) < max_reviews/2:
             try:
-                next_button = WebDriverWait(browser, 10).until(
-                    EC.element_to_be_clickable((By.XPATH, '//a[@class="_9QVEpD"]/span[contains(text(),"Next")]'))
-                )
-                browser.execute_script("arguments[0].scrollIntoView();", next_button)
-                next_button.click()
-                time.sleep(3)  # Allow time for the next page to load
+                # Extract reviews and ratings from the current page
+                get_reviewtext(browser, reviews)
+                get_ratings(browser, reviews)
+
+                # Stop if the required number of reviews is reached
+                if len(reviews["review_text"]) >= max_reviews:
+                    break
+
+                # Click the "Next" button to go to the next page
+                try:
+                    next_button = WebDriverWait(browser, 10).until(
+                        EC.element_to_be_clickable((By.XPATH, '//a[@class="_9QVEpD"]/span[contains(text(),"Next")]'))
+                    )
+                    browser.execute_script("arguments[0].scrollIntoView();", next_button)
+                    next_button.click()
+                    time.sleep(3)  # Allow time for the next page to load
+                except Exception as e:
+                    print("Reached the last page or error in clicking 'Next' button.")
+                    break
             except Exception as e:
-                print("Reached the last page or error in clicking 'Next' button.")
+                print(f"Error extracting positive reviews: {e}")
                 break
 
-        except Exception as e:
-            print(f"Error extracting reviews or ratings: {e}")
-            break
+        # Now, select the "NEGATIVE_FIRST" option to extract negative reviews
+        select.select_by_value("NEGATIVE_FIRST")
+        time.sleep(2)  # Allow time for the dropdown to apply the filter
 
-    # Trim to the specified number of reviews
-    reviews["review_text"] = reviews["review_text"][:max_reviews]
-    reviews["rating"] = reviews["rating"][:max_reviews]
+        while len(reviews["review_text"]) < max_reviews:
+            try:
+                # Extract reviews and ratings from the current page
+                get_reviewtext(browser, reviews)
+                get_ratings(browser, reviews)
+
+                # Stop if the required number of reviews is reached
+                if len(reviews["review_text"]) >= max_reviews:
+                    break
+
+                # Click the "Next" button to go to the next page
+                try:
+                    next_button = WebDriverWait(browser, 10).until(
+                        EC.element_to_be_clickable((By.XPATH, '//a[@class="_9QVEpD"]/span[contains(text(),"Next")]'))
+                    )
+                    browser.execute_script("arguments[0].scrollIntoView();", next_button)
+                    next_button.click()
+                    time.sleep(3)  # Allow time for the next page to load
+                except Exception as e:
+                    print("Reached the last page or error in clicking 'Next' button.")
+                    break
+            except Exception as e:
+                print(f"Error extracting negative reviews: {e}")
+                break
+
+    except Exception as e:
+        print(f"Error clicking 'All Reviews' button or selecting options: {e}")
 
     return reviews
 
@@ -267,8 +426,8 @@ def reviews():
         reviews_data['sentiments'] = getSentiment(reviews_data['get_reviews']['review_text'])
         print(reviews_data['sentiments'])
         reviews_data["summary"] = summarize_reviews(reviews_data['get_reviews']['review_text'])
-        reviews_data['keywords'] = extract_unique_keywords(reviews_data["summary"])
-        print(reviews_data)
+        reviews_data['keywords'] = extract_sentiment_phrases(reviews_data['get_reviews']['review_text'])
+        # print(reviews_data)
         return jsonify(reviews_data)
     except Exception as e:
         return jsonify({"error": str(e)}), 500
