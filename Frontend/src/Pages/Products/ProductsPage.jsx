@@ -15,8 +15,12 @@ const ProductsPage = () => {
   console.log("Products",products)
 
   const filteredProducts = products.filter((product) =>
-    product.summary.toLowerCase().includes(searchTerm.toLowerCase())
+    (product.summary && product.summary.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    (product.categories && product.categories.some(category =>
+      category.toLowerCase().includes(searchTerm.toLowerCase())
+    ))
   );
+  
 
   const fecthProducts = async () => {
     setLoading(true)

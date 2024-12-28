@@ -27,6 +27,7 @@ const mongoose = require('mongoose');
 
 const HistorySchema = new mongoose.Schema({
   summary: String,
+  categories:[String],
   url: String,
   keywords: {
     positive_keywords: [String],

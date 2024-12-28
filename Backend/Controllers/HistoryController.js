@@ -38,12 +38,13 @@ const storeHistory = async (req, res) => {
     const { summary, keywords, sentiments, get_reviews } = reviews;
     const { positive_keywords, negative_keywords } = keywords; // Extract keywords
     const { Positive, Negative, Nuetral } = sentiments;
-    const { avgRating } = get_reviews;
+    const { avgRating,categories } = get_reviews;
 
     // Create a new history record with keywords
     const HistoryUser = await History.create({
       summary,
       url,
+      categories,
       keywords: {
         positive_keywords, // Store positive keywords
         negative_keywords, // Store negative keywords

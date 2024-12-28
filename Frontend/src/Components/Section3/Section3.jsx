@@ -50,6 +50,7 @@ const Section3 = ({ setShowSection4, setReviews}) => {
               },
               get_reviews: {
                 avgRating: reviewData.get_reviews.rating.reduce((acc, curr) => acc + curr, 0) / reviewData.get_reviews.rating.length.toFixed(1),
+                categories:reviewData.get_reviews.categories
               },
             };
 
