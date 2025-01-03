@@ -18,8 +18,9 @@ const Signup = ({ setShowSignup, setShowLogin }) => {
             const response = await axios.post('http://localhost:7000/api/users/sendotp', {
                 email: data.email  // Send email to backend
             });
-            setOtpCard(true); // Show OTP input form if OTP sent successfully
             if (response.data.success) {
+                setOtpCard(true); // Show OTP input form if OTP sent successfully
+
                 toast.success(response.data.message);
             } else {
                 toast.error(response.data.message);

@@ -48,7 +48,7 @@ def configure_browser():
     options.add_argument(
         "uMozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/129.0.0.0 Safari/537.36 Edg/129.0.0.0"
     )
-    webdriver_service = Service(r"C:\Users\siddh\Downloads\edgedriver_win64\msedgedriver.exe")
+    webdriver_service = Service(r"C:\Users\karli\OneDrive\Desktop\Feedback Analysis\FeedbackAnalysisUsingGenAI-G206-PS24\Backend\DL_Models\edgedriver_win64\msedgedriver.exe")
     return webdriver.Edge(service=webdriver_service, options=options)
 
 

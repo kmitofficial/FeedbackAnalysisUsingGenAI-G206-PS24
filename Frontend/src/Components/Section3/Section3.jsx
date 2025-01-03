@@ -34,6 +34,7 @@ const Section3 = ({ setShowSection4, setReviews}) => {
             { url },
             { headers: { Authorization: `Bearer ${storedToken}` } }
           );
+          console.log("---------->",apiResponse.data)
 
           if (apiResponse.data.success) {
             const reviewData = apiResponse.data.data;
