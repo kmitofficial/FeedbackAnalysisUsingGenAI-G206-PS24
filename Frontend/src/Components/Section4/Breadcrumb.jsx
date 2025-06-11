@@ -60,13 +60,11 @@ const Breadcrumb = ({ categories }) => {
     padding: "4px 8px",
     borderRadius: "6px",
     background: "transparent",
-    color: "#fff",
     display: "inline-flex",
     alignItems: "center",
     gap: "6px",
     color: "#fff",
     fontWeight: "600",
-    background: "rgba(59, 130, 246, 0.1)",
   };
 
   const toggleButtonStyle = {

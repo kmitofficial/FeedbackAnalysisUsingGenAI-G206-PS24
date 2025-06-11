@@ -5,80 +5,71 @@ const otpGenerator = require("otp-generator")
 const History =require('../Models/HistoryModel')
 const bcrypt=require('bcrypt')
 const jwt=require('jsonwebtoken')
+const mailSender=require('../Utils/mailSender')
 
 //otp send function
-
 const sendOtp = async (req, res) => {
     try {
-        //fetch email from req.body
-        const { email } = req.body
+        const { email } = req.body;
 
-        //check if email is not empty
         if (!email) {
             return res.json({
                 success: false,
                 message: "Email is required!"
-            })
+            });
         }
 
-        //check if user already exists
-        const checkUserPresent = await User.findOne({ email })
-
-        //if user already exists then return res
+        const checkUserPresent = await User.findOne({ email });
         if (checkUserPresent) {
             return res.json({
                 success: false,
                 message: "User already exists!"
-            })
+            });
         }
 
-        //generate Otp
-        var otp = otpGenerator.generate(6, {
-            upperCaseAlphabets: false,
-            lowerCaseAlphabets: false,
-            specialChars: false
-        })
-
-        //const unique otp or not
-        var result = await Otp.findOne({ otp: otp })
-
-        while (result) {
+        // Generate a unique OTP
+        let otp;
+        let result;
+        do {
             otp = otpGenerator.generate(6, {
                 upperCaseAlphabets: false,
                 lowerCaseAlphabets: false,
                 specialChars: false
-            }
-            )
-            result = await Otp.findOne({ otp: otp })
+            });
+            result = await Otp.findOne({ otp });
+        } while (result);
+
+        // Try to send the OTP email first
+        const mailResponse = await mailSender(
+            email,
+            "Verification of email from Feedback Analysis:",
+            otp
+        );
+
+        if (!mailResponse) {
+            return res.json({
+                success: false,
+                message: "Could not send OTP email. Please try again."
+            });
         }
 
-
-        const otpPayload = {
-            otp: otp,
-            email: email
-        }
-
-        //create entry in db of otp
-
-        const OtpBody = await Otp.create(otpPayload)
-
-        console.log(OtpBody)
-
-
-        //send response
+        // Only save the OTP if email was sent successfully
+        const otpPayload = { otp, email };
+        const OtpBody = await Otp.create(otpPayload);
 
         return res.json({
             success: true,
-            message: "Otp sent Successfully!"
-        })
+            message: "OTP sent successfully!",
+            otpId: OtpBody._id // Optional: for tracking
+        });
     } catch (error) {
-
+        console.log(error)
         return res.json({
             success: false,
-            message: "somethng wrong while sending Otp!"
-        })
+            message: "Something went wrong while sending OTP!"
+        });
     }
-}
+};
 
 
 //sign up
