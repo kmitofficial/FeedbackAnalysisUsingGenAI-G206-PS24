@@ -11,12 +11,14 @@ const getReviews=async (req, res) => {
 
     try {
         // Send the URL to Flask for scraping
-        const flaskResponse = await axios.post('http://localhost:5000/reviews', { url });
+        const flaskResponse = await axios.post('http://192.168.175.237:5000/reviews', { url });
 
         console.log("flask:----->",flaskResponse.data)
 
         // Get the scraped data from Flask
         const scrapedData = flaskResponse.data;
+
+        console.log(scrapedData,"--------------->")
 
         // Return the scraped data to the client (or store/process it in your DB)
         res.json({
